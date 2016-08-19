@@ -9,13 +9,13 @@
 #ifndef ACCESSIBILITY_WRAPPER_H_
 #define ACCESSIBILITY_WRAPPER_H_
 
-class AccesibilityWrapper{
+class AccessibilityWrapper{
     
 public:
-    static AccesibilityWrapper * getInstance();
+    static AccessibilityWrapper * getInstance();
     
     // init menu scene rect
-	void initMenuSceneRect();
+	void addMenuSceneRect(int i, const char * s, float l, float r, float t, float b);
     
 };
 

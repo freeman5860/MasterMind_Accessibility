@@ -25,6 +25,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
 
+	CCSize frameSize = pEGLView->getFrameSize();
+    CCLOG("framesize : %f, %f", frameSize.width, frameSize.height); 
+
     pDirector->setOpenGLView(pEGLView);
 
     CCSize designSize = CCSize(480, 720);

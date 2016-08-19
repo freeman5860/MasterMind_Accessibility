@@ -11,9 +11,10 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/HelloWorldScene.cpp \
                    ../../Classes/VisibleRect.cpp \
                    ../../Classes/HowToPlay.cpp \
-                   ../../Classes/Game.cpp
+                   ../../Classes/Game.cpp \
+		   ../../Classes/AccessibilityWrapper/Android/AccessibilityWrapper.cpp
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes 
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static cocosdenshion_static
 

@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "SimpleAudioEngine.h"
 //#include "ChartboostX.h"
+#include "AccessibilityWrapper/AccessibilityWrapper.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "GameHelper.h"
@@ -42,6 +43,9 @@ bool HelloWorld::init() {
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+	CCLog("winSize: %f,%f", winSize.width, winSize.height);
+
 	// add "HelloWorld" splash screen"
 	CCSprite* pSprite = CCSprite::create("back.png");
 
@@ -71,6 +75,12 @@ bool HelloWorld::init() {
 		m_pItemMenu->addChild(pMenuItem, i + 10000);
 		pMenuItem->setPosition(
 				ccp( VisibleRect::center().x, (VisibleRect::bottom().y + (menuCount - i) * LINE_SPACE) ));
+
+		CCRect rect = pMenuItem->rect();
+		CCLog("menu %d rect :(%f,%f,%f,%f)", i, rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());
+		char str[12] = { 0 };
+		sprintf(str, "按钮%d", i);
+		AccessibilityWrapper::getInstance()->addMenuSceneRect(i, str, rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());
 	}
 
 	m_pItemMenu->setContentSize(

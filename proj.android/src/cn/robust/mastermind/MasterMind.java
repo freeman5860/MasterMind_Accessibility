@@ -25,28 +25,32 @@ package cn.robust.mastermind;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
+import android.view.Window;
 import android.widget.LinearLayout;
 
 public class MasterMind extends Cocos2dxActivity{
 	
-	private MainSceneHelper mMainSceneHelper;
+	private MenuSceneHelper mMainSceneHelper;
 	
 	private AccessibilityGameView mGameView;
 
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		
+		Rect rectangle = new Rect();
+		getWindow().getDecorView().getWindowVisibleDisplayFrame(rectangle);
+		AccessibilityHelper.setScreen(rectangle.width(), rectangle.height());
+		
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
         		getWindowManager().getDefaultDisplay().getWidth(),
-        		getWindowManager().getDefaultDisplay().getHeight());
-		AccessibilityHelper.setScreen(getWindowManager().getDefaultDisplay().getWidth(),
         		getWindowManager().getDefaultDisplay().getHeight());
 		mGameView = new AccessibilityGameView(this);
 		addContentView(mGameView, params);
 
-		mMainSceneHelper = new MainSceneHelper(mGameView);
+		mMainSceneHelper = new MenuSceneHelper(mGameView);
 		ViewCompat.setImportantForAccessibility(mGameView, ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_YES);
 		ViewCompat.setAccessibilityDelegate(mGameView, mMainSceneHelper);
 	}
