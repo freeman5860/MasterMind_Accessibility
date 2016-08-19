@@ -13,9 +13,15 @@ class AccessibilityWrapper{
     
 public:
     static AccessibilityWrapper * getInstance();
+
+	// on scene change
+	void onSceneStart(int scene);
     
     // init menu scene rect
 	void addMenuSceneRect(int i, const char * s, float l, float r, float t, float b);
+
+	// init menu scene rect
+	void addPlaySceneRect(int i, const char * s, float l, float r, float t, float b);
     
 };
 

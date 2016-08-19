@@ -10,6 +10,7 @@
 #include <sstream>
 #include "HelloWorldScene.h"
 #include "ChartboostX.h"
+#include "AccessibilityWrapper/AccessibilityWrapper.h"
 
 using namespace std;
 
@@ -47,6 +48,8 @@ bool Game::init() {
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
+	AccessibilityWrapper::getInstance()->onSceneStart(1);
+
 	/////////////////////////////
 	// 2. add a menu item with "X" image, which is clicked to quit the program
 	//    you may modify it.
@@ -66,6 +69,10 @@ bool Game::init() {
 	pMenu->addChild(pCloseItem, 10000);
 	pMenu->setPosition(CCPointZero);
 	this->addChild(pMenu, 1);
+
+	CCRect rect = pCloseItem->rect();
+	const char * test = "关闭按钮";
+	AccessibilityWrapper::getInstance()->addPlaySceneRect(0, test, rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());
 
 	int space_x = origin.x + 33;
 	int space_y = origin.y + 108;
@@ -127,6 +134,22 @@ bool Game::init() {
 		hf->setPosition(
 		ccp(hf->getContentSize().width / 2, hf->getContentSize().height / 2));
 		h->addChild(hf);
+
+		/*CCSize s = h->getContentSize();
+		CCPoint p = h->getPosition();
+		CCPoint ap = h->getAnchorPoint();
+		CCRect rect = CCRectMake(
+								p.x - ap.x * s.width ,
+								 p.y - ap.y * s.height + worm->getContentSize().height,
+								 worm->getContentSize().width, worm->getContentSize().height);*/
+		CCRect wRect = worm->boundingBox();
+		CCPoint p = h->getPosition();
+		CCRect rect = CCRectMake(
+								p.x - wRect.origin.x,
+								 p.y + 30,
+								 wRect.size.width, wRect.size.height);
+		const char * test = "颜色";
+		AccessibilityWrapper::getInstance()->addPlaySceneRect(i + 1, test, rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());
 	}
 
 	clock = CCLabelTTF::create("", "fonts/akaDylan Plain.ttf", 20);

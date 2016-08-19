@@ -12,20 +12,20 @@ import android.util.Log;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 
-public class MenuSceneHelper extends ExploreByTouchHelper {
+public class GameSceneHelper extends ExploreByTouchHelper {
 
 	private Context mContext;
 
 	private ArrayList<AccessibilityItem> mNodeItems;
 
-	public MenuSceneHelper(View forView) {
+	public GameSceneHelper(View forView) {
 		super(forView);
 
 		mContext = forView.getContext();
 
 		mNodeItems = new ArrayList<AccessibilityItem>();
 		
-		AccessibilityHelper.setMenuSceneRef(this);
+		AccessibilityHelper.setGameSceneRef(this);
 	}
 
 	@Override
@@ -68,11 +68,8 @@ public class MenuSceneHelper extends ExploreByTouchHelper {
 	}
 
 	private String getContentDesc(int virtualViewId) {
-		switch (virtualViewId) {
-		case 0:
-			return mContext.getString(R.string.cd_play_button);
-		case 1:
-			return mContext.getString(R.string.cd_howtoplay_button);
+		if(mNodeItems.size() > virtualViewId){
+			return mNodeItems.get(virtualViewId).mDesc;
 		}
 
 		return "";

@@ -34,6 +34,7 @@ import android.widget.LinearLayout;
 public class MasterMind extends Cocos2dxActivity{
 	
 	private MenuSceneHelper mMainSceneHelper;
+	private GameSceneHelper mPlaySceneHelper;
 	
 	private AccessibilityGameView mGameView;
 
@@ -51,8 +52,10 @@ public class MasterMind extends Cocos2dxActivity{
 		addContentView(mGameView, params);
 
 		mMainSceneHelper = new MenuSceneHelper(mGameView);
+		mPlaySceneHelper = new GameSceneHelper(mGameView);
+		
+		AccessibilityHelper.setGameView(mGameView);
 		ViewCompat.setImportantForAccessibility(mGameView, ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_YES);
-		ViewCompat.setAccessibilityDelegate(mGameView, mMainSceneHelper);
 	}
 	
     static {

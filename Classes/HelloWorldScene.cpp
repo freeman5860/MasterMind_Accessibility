@@ -28,6 +28,8 @@ CCScene* HelloWorld::scene() {
 	// add layer as a child to scene
 	scene->addChild(layer);
 
+	AccessibilityWrapper::getInstance()->onSceneStart(0);
+
 	// return the scene
 	return scene;
 }
@@ -42,9 +44,6 @@ bool HelloWorld::init() {
 
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
-
-	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-	CCLog("winSize: %f,%f", winSize.width, winSize.height);
 
 	// add "HelloWorld" splash screen"
 	CCSprite* pSprite = CCSprite::create("back.png");
