@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>DF9ECD61-455B-48FB-860F-29DA9FBEC9D0</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Mole Guess</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>E5CFAFE5-2F35-4DBD-97FE-E9E711D5506C</key>
+		<string>https://git.oschina.net/robust/MasterMind.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>proj.ios/Mole Guess.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>E5CFAFE5-2F35-4DBD-97FE-E9E711D5506C</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://git.oschina.net/robust/MasterMind.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>E5CFAFE5-2F35-4DBD-97FE-E9E711D5506C</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E5CFAFE5-2F35-4DBD-97FE-E9E711D5506C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MasterMind</string>
+		</dict>
+	</array>
+</dict>
+</plist>
