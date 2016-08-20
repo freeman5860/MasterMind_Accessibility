@@ -46,6 +46,22 @@ void AccessibilityWrapper::addPlaySceneRect(int i, const char * s, float l, floa
 	}
 }
 
+void AccessibilityWrapper::addSceneRect(int i, const char * s, float l, float r, float t, float b){
+	JniMethodInfo minfo;
+	bool isHave = JniHelper::getStaticMethodInfo(minfo,
+			"cn/robust/mastermind/AccessibilityHelper","addSceneRect","(ILjava/lang/String;IIII)V");
+	if(!isHave){
+			//CCLog("jni:openURL 函数不存在");
+	}else{
+		int left = (int)l;
+		int right = (int)r;
+		int top = (int)t;
+		int bottom = (int) b;
+		jstring jstr = minfo.env->NewStringUTF(s);
+		minfo.env->CallStaticVoidMethod(minfo.classID,minfo.methodID, i, jstr, left, right, top, bottom);
+	}
+}
+
 void AccessibilityWrapper::onSceneStart(int scene){
 	JniMethodInfo minfo;
 	bool isHave = JniHelper::getStaticMethodInfo(minfo,
@@ -54,5 +70,29 @@ void AccessibilityWrapper::onSceneStart(int scene){
 			//CCLog("jni:openURL 函数不存在");
 	}else{
 		minfo.env->CallStaticVoidMethod(minfo.classID,minfo.methodID, scene);
+	}
+}
+
+void AccessibilityWrapper::annouceResult(const char * s){
+	JniMethodInfo minfo;
+	bool isHave = JniHelper::getStaticMethodInfo(minfo,
+			"cn/robust/mastermind/AccessibilityHelper","annouceStepResult","(Ljava/lang/String;)V");
+	if(!isHave){
+			//CCLog("jni:openURL 函数不存在");
+	}else{
+		jstring jstr = minfo.env->NewStringUTF(s);
+		minfo.env->CallStaticVoidMethod(minfo.classID,minfo.methodID, jstr);
+	}
+}
+
+void AccessibilityWrapper::updateNodeDesc(int i, const char * s){
+	JniMethodInfo minfo;
+	bool isHave = JniHelper::getStaticMethodInfo(minfo,
+			"cn/robust/mastermind/AccessibilityHelper","updateAccessibilityItem","(ILjava/lang/String;)V");
+	if(!isHave){
+			//CCLog("jni:openURL 函数不存在");
+	}else{
+		jstring jstr = minfo.env->NewStringUTF(s);
+		minfo.env->CallStaticVoidMethod(minfo.classID,minfo.methodID, i, jstr);
 	}
 }

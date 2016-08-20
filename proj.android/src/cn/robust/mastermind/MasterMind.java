@@ -27,14 +27,13 @@ import org.cocos2dx.lib.Cocos2dxActivity;
 
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.v4.view.ViewCompat;
-import android.view.Window;
 import android.widget.LinearLayout;
 
 public class MasterMind extends Cocos2dxActivity{
 	
 	private MenuSceneHelper mMainSceneHelper;
 	private GameSceneHelper mPlaySceneHelper;
+	private OverSceneHelper mOverSceneHelper;
 	
 	private AccessibilityGameView mGameView;
 
@@ -53,9 +52,9 @@ public class MasterMind extends Cocos2dxActivity{
 
 		mMainSceneHelper = new MenuSceneHelper(mGameView);
 		mPlaySceneHelper = new GameSceneHelper(mGameView);
+		mOverSceneHelper = new OverSceneHelper(mGameView);
 		
 		AccessibilityHelper.setGameView(mGameView);
-		ViewCompat.setImportantForAccessibility(mGameView, ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_YES);
 	}
 	
     static {

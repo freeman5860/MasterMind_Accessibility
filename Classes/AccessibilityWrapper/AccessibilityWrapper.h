@@ -22,6 +22,15 @@ public:
 
 	// init menu scene rect
 	void addPlaySceneRect(int i, const char * s, float l, float r, float t, float b);
+
+	// add scene rect
+	void addSceneRect(int i, const char * s, float l, float r, float t, float b);
+
+	// speak result
+	void annouceResult(const char * s);
+
+    // update the desc of node at i
+	void updateNodeDesc(int i, const char * s);
     
 };
 

@@ -10,6 +10,7 @@
 #include <sstream>
 #include "HelloWorldScene.h"
 #include "ChartboostX.h"
+#include "GameConstants.h"
 #include "AccessibilityWrapper/AccessibilityWrapper.h"
 
 using namespace std;
@@ -71,8 +72,8 @@ bool Game::init() {
 	this->addChild(pMenu, 1);
 
 	CCRect rect = pCloseItem->rect();
-	const char * test = "关闭按钮";
-	AccessibilityWrapper::getInstance()->addPlaySceneRect(0, test, rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());
+	const char * strClose = GameConstants::getPlayNodeDesc(0);
+	AccessibilityWrapper::getInstance()->addPlaySceneRect(0, strClose, rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());
 
 	int space_x = origin.x + 33;
 	int space_y = origin.y + 108;
@@ -135,21 +136,14 @@ bool Game::init() {
 		ccp(hf->getContentSize().width / 2, hf->getContentSize().height / 2));
 		h->addChild(hf);
 
-		/*CCSize s = h->getContentSize();
-		CCPoint p = h->getPosition();
-		CCPoint ap = h->getAnchorPoint();
-		CCRect rect = CCRectMake(
-								p.x - ap.x * s.width ,
-								 p.y - ap.y * s.height + worm->getContentSize().height,
-								 worm->getContentSize().width, worm->getContentSize().height);*/
 		CCRect wRect = worm->boundingBox();
 		CCPoint p = h->getPosition();
 		CCRect rect = CCRectMake(
 								p.x - wRect.origin.x,
 								 p.y + 30,
 								 wRect.size.width, wRect.size.height);
-		const char * test = "颜色";
-		AccessibilityWrapper::getInstance()->addPlaySceneRect(i + 1, test, rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());
+		const char * desc = GameConstants::getPlayNodeDesc(i + 1);
+		AccessibilityWrapper::getInstance()->addPlaySceneRect(i + 1, desc, rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());
 	}
 
 	clock = CCLabelTTF::create("", "fonts/akaDylan Plain.ttf", 20);
@@ -253,11 +247,14 @@ bool Game::checkRow() {
 	int result = 0;
 	CCSprite* nest = (CCSprite*) getChildByTag(42 + (curCount - 1) / 4);
 	CCSprite* bird;
+	int cnt1 = 0;
+	int cnt2 = 0;
 //	float h, w;
 	bool checked1[] = { false, false, false, false };
 	for (int i = 0; i < 4; i++) {
 		if (curRow[i] == answer[i]) {
 			result++;
+			cnt1++;
 			checked1[i] = true;
 			bird = createBird(2);
 //			w = bird->getContentSize().width;
@@ -294,6 +291,7 @@ bool Game::checkRow() {
 			if (answer[j] == cur && !checked2[j]) {
 				checked2[j] = true;
 				result++;
+				cnt2++;
 				bird = createBird(1);
 //				w = bird->getContentSize().width;
 //				h = bird->getContentSize().height;
@@ -305,20 +303,40 @@ bool Game::checkRow() {
 			}
 		}
 	}
+
+	int round = curCount / 4;
+	char strRes[100] = {0};
+	sprintf(strRes, ROW_RESULT, round, GameConstants::getColor(curRow[0]), 
+		GameConstants::getColor(curRow[1]), 
+		GameConstants::getColor(curRow[2]), 
+		GameConstants::getColor(curRow[3]), cnt1, cnt2);
+	AccessibilityWrapper::getInstance()->annouceResult(strRes);
+
+	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+	CCRect wRect = nest->boundingBox();
+	CCPoint p = nest->getPosition();
+	CCRect rect = CCRectMake(20, wRect.getMinY(), visibleSize.width - 40, wRect.size.height);
+	AccessibilityWrapper::getInstance()->addPlaySceneRect(round + 6, strRes, rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());
+
 	return false;
 }
 
 void Game::gameOver(bool win) {
+	AccessibilityWrapper::getInstance()->onSceneStart(2);
+
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 	CCSprite* dialog = CCSprite::create("dialog.png");
 	dialog->setPosition(
 	ccp(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
 	string result;
+	string overDesc;
 	if (win) {
 		result = "You Win!";
+		overDesc = "恭喜你猜对了";
 	} else {
 		result = "You Lose!";
+		overDesc = "游戏结束，猜错了";
 	}
 	CCLabelTTF* label = CCLabelTTF::create(result.c_str(),
 			"fonts/akaDylan Plain.ttf", 40);
@@ -350,6 +368,25 @@ void Game::gameOver(bool win) {
 	menu->addChild(pMenuItem, 10001);
 	dialog->addChild(menu);
 	addChild(dialog);
+
+	char strRes[100] = {0};
+	sprintf(strRes, GAME_OVER, overDesc.c_str(), GameConstants::getColor(answer[0]), 
+		GameConstants::getColor(answer[1]), 
+		GameConstants::getColor(answer[2]), 
+		GameConstants::getColor(answer[3]), str);
+	AccessibilityWrapper::getInstance()->annouceResult(strRes);
+
+	/*CCRect lRect = label->boundingBox();
+	CCPoint p = label->getPosition();
+	CCRect rect = CCRectMake(lRect.getMinX(), lRect.getMinY(),lRect.size.width, lRect.size.height);
+	CCLog("rect: %f, %f, %f, %f", rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());
+	AccessibilityWrapper::getInstance()->addSceneRect(100, strRes, rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());*/
+
+	CCRect againRect = pMenuItem->rect();
+	CCPoint p = dialog->getPosition();
+	CCRect bRect = CCRectMake(p.x - againRect.origin.x, p.y + 30, againRect.size.width, againRect.size.height);
+	const char * strAgain = GameConstants::getPlayNodeDesc(7);
+	AccessibilityWrapper::getInstance()->addSceneRect(0, strAgain, bRect.getMinX(),bRect.getMaxX(),bRect.getMinY(),bRect.getMaxY());
     
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     ChartboostX::sharedChartboostX()->hasCachedInterstitial();

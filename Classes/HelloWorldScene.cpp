@@ -3,6 +3,7 @@
 #include "VisibleRect.h"
 #include "HowToPlay.h"
 #include "Game.h"
+#include "GameConstants.h"
 #include "SimpleAudioEngine.h"
 //#include "ChartboostX.h"
 #include "AccessibilityWrapper/AccessibilityWrapper.h"
@@ -28,8 +29,6 @@ CCScene* HelloWorld::scene() {
 	// add layer as a child to scene
 	scene->addChild(layer);
 
-	AccessibilityWrapper::getInstance()->onSceneStart(0);
-
 	// return the scene
 	return scene;
 }
@@ -44,6 +43,8 @@ bool HelloWorld::init() {
 
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+
+	AccessibilityWrapper::getInstance()->onSceneStart(0);
 
 	// add "HelloWorld" splash screen"
 	CCSprite* pSprite = CCSprite::create("back.png");
@@ -76,9 +77,7 @@ bool HelloWorld::init() {
 				ccp( VisibleRect::center().x, (VisibleRect::bottom().y + (menuCount - i) * LINE_SPACE) ));
 
 		CCRect rect = pMenuItem->rect();
-		CCLog("menu %d rect :(%f,%f,%f,%f)", i, rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());
-		char str[12] = { 0 };
-		sprintf(str, "按钮%d", i);
+		const char * str = GameConstants::getMenuNodeDesc(i);
 		AccessibilityWrapper::getInstance()->addMenuSceneRect(i, str, rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());
 	}
 
