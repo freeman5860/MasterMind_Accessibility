@@ -6,7 +6,5 @@ public class MenuSceneHelper extends BaseSceneHelper {
 
 	public MenuSceneHelper(View forView) {
 		super(forView);
-		
-		AccessibilityHelper.setMenuSceneRef(this);
 	}
 }

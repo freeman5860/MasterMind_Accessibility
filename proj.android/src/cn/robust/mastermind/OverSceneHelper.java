@@ -6,7 +6,5 @@ public class OverSceneHelper extends BaseSceneHelper {
 
 	public OverSceneHelper(View forView) {
 		super(forView);
-		
-		AccessibilityHelper.setOverSceneRef(this);
 	}
 }

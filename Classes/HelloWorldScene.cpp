@@ -86,6 +86,7 @@ bool HelloWorld::init() {
 	m_pItemMenu->setPosition(s_tCurPos);
 	addChild(m_pItemMenu);
 	setTouchEnabled(true);
+	this->setKeypadEnabled(true);
 
 	//add title
 	CCSprite* title = CCSprite::create("title.png");
@@ -172,4 +173,8 @@ void HelloWorld::menuCallback(CCObject* pSender) {
        // ChartboostX::sharedChartboostX()->showMoreApps();
 #endif
     }
+}
+
+void HelloWorld::keyBackClicked(){
+    CCDirector::sharedDirector()->end();
 }

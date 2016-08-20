@@ -24,6 +24,7 @@ public:
 	void menuCallback(CCObject* pSender);
 	void registerWithTouchDispatcher();
 	void ccTouchesEnded(cocos2d::CCSet* touches, cocos2d::CCEvent* event);
+	virtual void keyBackClicked();
 	CREATE_FUNC(Game);
 
 private:

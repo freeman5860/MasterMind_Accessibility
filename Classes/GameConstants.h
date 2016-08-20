@@ -28,6 +28,8 @@ USING_NS_CC;
 #define ROW_RESULT "第%d轮，%s%s%s%s，%d个猜中位置和颜色, %d个猜中颜色但位置不对"
 #define GAME_OVER "%s，正确答案是%s%s%s%s, 花费时间%s"
 
+#define HOW_TO_PLAY "怎么玩说明：每轮选择4个颜色的地鼠，猜猜它们的位置以及颜色是否正确，共有9次机会。此界面双击可返回"
+
 class GameConstants
 {
 public:

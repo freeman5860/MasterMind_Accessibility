@@ -10,7 +10,7 @@ import android.support.v4.widget.ExploreByTouchHelper;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 
-public abstract class BaseSceneHelper extends ExploreByTouchHelper {
+public class BaseSceneHelper extends ExploreByTouchHelper {
 
 	protected ArrayList<AccessibilityItem> mNodeItems;
 

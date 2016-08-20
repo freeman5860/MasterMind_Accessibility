@@ -17,15 +17,21 @@ public class AccessibilityHelper {
 	private static int sWidth;
 	private static int sHeight;
 	
-	private static WeakReference<MenuSceneHelper> mMenuRef;
-	private static WeakReference<GameSceneHelper> mPlayRef;
-	private static WeakReference<OverSceneHelper> mOverRef;
-	private static WeakReference<BaseSceneHelper> mCurRef;
+	private static MenuSceneHelper mMenuRef;
+	private static GameSceneHelper mPlayRef;
+	private static OverSceneHelper mOverRef;
+	private static BaseSceneHelper mHelpRef;
+	private static BaseSceneHelper mCurRef;
 	
 	private static WeakReference<AccessibilityGameView> mGameViewRef;
 	
 	public static void setGameView(AccessibilityGameView view){
 		mGameViewRef = new WeakReference<AccessibilityGameView>(view);
+		
+		mMenuRef = new MenuSceneHelper(view);
+		mPlayRef = new GameSceneHelper(view);
+		mOverRef = new OverSceneHelper(view);
+		mHelpRef = new BaseSceneHelper(view);
 	}
 	
 	public static void setScreen(int w, int h){
@@ -41,18 +47,6 @@ public class AccessibilityHelper {
 	
 	public static int getHeight(){
 		return sHeight;
-	}
-	
-	public static void setMenuSceneRef(MenuSceneHelper helper){
-		mMenuRef = new WeakReference<MenuSceneHelper>(helper);
-	}
-	
-	public static void setGameSceneRef(GameSceneHelper helper){
-		mPlayRef = new WeakReference<GameSceneHelper>(helper);
-	}
-	
-	public static void setOverSceneRef(OverSceneHelper helper){
-		mOverRef = new WeakReference<OverSceneHelper>(helper);
 	}
 	
 	private static int getScreenX(int x){
@@ -82,37 +76,42 @@ public class AccessibilityHelper {
 	public static void onMenuSceneLoad(int scene){
 		Log.e("hjy", "onMenuSceneLoad " + scene);
 		
-		if(mGameViewRef.get() != null && mMenuRef.get() != null && 
-				mPlayRef.get() != null && mOverRef.get() != null){
+		if(mGameViewRef.get() != null && mMenuRef != null && 
+				mPlayRef != null && mOverRef != null){
 			switch (scene) {
 			case 0:
-				ViewCompat.setAccessibilityDelegate(mGameViewRef.get(), mMenuRef.get());
-				handleNewScene(mMenuRef.get());
+				ViewCompat.setAccessibilityDelegate(mGameViewRef.get(), mMenuRef);
+				handleNewScene(mMenuRef);
 				break;
 			case 1:
-				ViewCompat.setAccessibilityDelegate(mGameViewRef.get(), mPlayRef.get());
-				handleNewScene(mPlayRef.get());
+				ViewCompat.setAccessibilityDelegate(mGameViewRef.get(), mPlayRef);
+				handleNewScene(mPlayRef);
 				break;
 			case 2:
-				ViewCompat.setAccessibilityDelegate(mGameViewRef.get(), mOverRef.get());
-				handleNewScene(mOverRef.get());
+				ViewCompat.setAccessibilityDelegate(mGameViewRef.get(), mOverRef);
+				handleNewScene(mOverRef);
 				break;
+			case 3:
+				ViewCompat.setAccessibilityDelegate(mGameViewRef.get(), mHelpRef);
+				handleNewScene(mHelpRef);
 			}
 		}
 	}
 	
 	private static void handleNewScene(BaseSceneHelper newScene){
-		if(mCurRef != null && mCurRef.get() != null){
-			mCurRef.get().destroyScene();
+		if(mCurRef != null ){
+			mCurRef.destroyScene();
 		}
-		mCurRef = new WeakReference<BaseSceneHelper>(newScene);
+		mCurRef = newScene;
+		mGameViewRef.get().setCurSceneHelper(newScene);
 		
 		if(android.os.Build.VERSION.SDK_INT >= 16){
 			mGameViewRef.get().postDelayed(new Runnable() {
 				
+				@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 				@Override
 				public void run() {
-					mGameViewRef.get().sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED);
+					mGameViewRef.get().sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED);
 				}
 			}, 100);
 		}
@@ -125,8 +124,8 @@ public class AccessibilityHelper {
 		int sb = getScreenY(t);
 		AccessibilityItem item = new AccessibilityItem(i, d, sl, sr, st, sb);
 		Log.e("hjy", "addMenuSceneRect " + item.toString());
-		if(mMenuRef.get() != null){
-			mMenuRef.get().addAccessibilityItem(item);
+		if(mMenuRef != null){
+			mMenuRef.addAccessibilityItem(item);
 		}
 	}
 	
@@ -138,8 +137,8 @@ public class AccessibilityHelper {
 		int sb = getScreenY(t);
 		AccessibilityItem item = new AccessibilityItem(i, d, sl, sr, st, sb);
 		//Log.e("hjy", "addPlaySceneRect " + item.toString());
-		if(mPlayRef.get() != null){
-			mPlayRef.get().addAccessibilityItem(item);
+		if(mPlayRef != null){
+			mPlayRef.addAccessibilityItem(item);
 		}
 	}
 	
@@ -150,8 +149,8 @@ public class AccessibilityHelper {
 		int sb = getScreenY(t);
 		AccessibilityItem item = new AccessibilityItem(i, d, sl, sr, st, sb);
 		Log.e("hjy", "addSceneRect " + item.toString());
-		if(mCurRef.get() != null){
-			mCurRef.get().addAccessibilityItem(item);
+		if(mCurRef != null){
+			mCurRef.addAccessibilityItem(item);
 		}
 	}
 	
@@ -170,8 +169,8 @@ public class AccessibilityHelper {
 	}
 	
 	public static void updateAccessibilityItem(int i, String desc){
-		if(mCurRef != null && mCurRef.get() != null){
-			mCurRef.get().updateAccessibilityItem(i, desc);
+		if(mCurRef != null){
+			mCurRef.updateAccessibilityItem(i, desc);
 	}
 	}
 }

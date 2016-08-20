@@ -8,6 +8,8 @@
 #include "HowToPlay.h"
 #include "HelloWorldScene.h"
 #include "ChartboostX.h"
+#include "GameConstants.h"
+#include "AccessibilityWrapper/AccessibilityWrapper.h"
 
 CCScene* HowToPlay::scene() {
 	// 'scene' is an autorelease object
@@ -31,6 +33,8 @@ bool HowToPlay::init() {
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
+	AccessibilityWrapper::getInstance()->onSceneStart(3);
+
 	// add "HelloWorld" splash screen"
 	CCSprite* pSprite = CCSprite::create("back2.png");
 
@@ -41,6 +45,11 @@ bool HowToPlay::init() {
 	// add the sprite as a child to this layer
 	this->addChild(pSprite, 0);
 	this->setTouchEnabled(true);
+
+	CCRect rect = pSprite->boundingBox();
+	AccessibilityWrapper::getInstance()->addSceneRect(0, HOW_TO_PLAY, rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());
+
+	this->setKeypadEnabled(true);
     
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     ChartboostX::sharedChartboostX()->hasCachedInterstitial();
@@ -62,4 +71,12 @@ void HowToPlay::registerWithTouchDispatcher()
 {
 	// CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,0,true);
     CCDirector::sharedDirector()->getTouchDispatcher()->addStandardDelegate(this,0);
+}
+
+void HowToPlay::keyBackClicked(){
+    CCScene* pScene = new CCScene();
+	CCLayer* pLayer = HelloWorld::create();
+	pScene->addChild(pLayer, 0);
+	CCDirector::sharedDirector()->replaceScene(pScene);
+	pScene->release();
 }

@@ -22,6 +22,8 @@ public:
     static cocos2d::CCScene* scene();
     void registerWithTouchDispatcher();
     void ccTouchesEnded(cocos2d::CCSet* touches, cocos2d::CCEvent* event);
+	virtual void keyBackClicked();
+
     CREATE_FUNC(HowToPlay);
 };
 

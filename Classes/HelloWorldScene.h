@@ -16,6 +16,8 @@ public:
     
     // a selector callback
     void menuCallback(CCObject * pSender);
+
+	virtual void keyBackClicked();
     
     //给文字添加描边
     CCLabelTTF* textAddOutline(const char* string, const char* fontName, float fontSize,const ccColor3B &color3,float lineWidth);

@@ -6,7 +6,5 @@ public class GameSceneHelper extends BaseSceneHelper {
 
 	public GameSceneHelper(View forView) {
 		super(forView);
-		
-		AccessibilityHelper.setGameSceneRef(this);
 	}
 }

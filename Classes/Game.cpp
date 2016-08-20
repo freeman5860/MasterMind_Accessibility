@@ -153,6 +153,7 @@ bool Game::init() {
 	schedule(schedule_selector(Game::step));
 
 	this->setTouchEnabled(true);
+	this->setKeypadEnabled(true);
 
 	return true;
 }
@@ -376,17 +377,17 @@ void Game::gameOver(bool win) {
 		GameConstants::getColor(answer[3]), str);
 	AccessibilityWrapper::getInstance()->annouceResult(strRes);
 
-	/*CCRect lRect = label->boundingBox();
-	CCPoint p = label->getPosition();
-	CCRect rect = CCRectMake(lRect.getMinX(), lRect.getMinY(),lRect.size.width, lRect.size.height);
+	CCRect lRect = dialog->boundingBox();
+	CCPoint p = dialog->getPosition();
+	CCRect rect = CCRectMake(lRect.getMinX(), lRect.getMaxY() - 30,lRect.size.width, 30);
 	CCLog("rect: %f, %f, %f, %f", rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());
-	AccessibilityWrapper::getInstance()->addSceneRect(100, strRes, rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());*/
+	AccessibilityWrapper::getInstance()->addSceneRect(0, strRes, rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());
 
 	CCRect againRect = pMenuItem->rect();
-	CCPoint p = dialog->getPosition();
-	CCRect bRect = CCRectMake(p.x - againRect.origin.x, p.y + 30, againRect.size.width, againRect.size.height);
+	//CCPoint p = dialog->getPosition();
+	CCRect bRect = CCRectMake(againRect.origin.x, lRect.getMinY() + againRect.origin.y, againRect.size.width, againRect.size.height);
 	const char * strAgain = GameConstants::getPlayNodeDesc(7);
-	AccessibilityWrapper::getInstance()->addSceneRect(0, strAgain, bRect.getMinX(),bRect.getMaxX(),bRect.getMinY(),bRect.getMaxY());
+	AccessibilityWrapper::getInstance()->addSceneRect(1, strAgain, bRect.getMinX(),bRect.getMaxX(),bRect.getMinY(),bRect.getMaxY());
     
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     ChartboostX::sharedChartboostX()->hasCachedInterstitial();
@@ -450,4 +451,12 @@ void Game::registerWithTouchDispatcher() {
 // CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,0,true);
 	CCDirector::sharedDirector()->getTouchDispatcher()->addStandardDelegate(
 			this, 0);
+}
+
+void Game::keyBackClicked(){
+    CCScene* pScene = new CCScene();
+	CCLayer* pLayer = HelloWorld::create();
+	pScene->addChild(pLayer, 0);
+	CCDirector::sharedDirector()->replaceScene(pScene);
+	pScene->release();
 }
