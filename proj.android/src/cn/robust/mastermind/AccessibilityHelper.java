@@ -17,9 +17,9 @@ public class AccessibilityHelper {
 	private static int sWidth;
 	private static int sHeight;
 	
-	private static MenuSceneHelper mMenuRef;
-	private static GameSceneHelper mPlayRef;
-	private static OverSceneHelper mOverRef;
+	private static BaseSceneHelper mMenuRef;
+	private static BaseSceneHelper mPlayRef;
+	private static BaseSceneHelper mOverRef;
 	private static BaseSceneHelper mHelpRef;
 	private static BaseSceneHelper mCurRef;
 	
@@ -28,9 +28,9 @@ public class AccessibilityHelper {
 	public static void setGameView(AccessibilityGameView view){
 		mGameViewRef = new WeakReference<AccessibilityGameView>(view);
 		
-		mMenuRef = new MenuSceneHelper(view);
-		mPlayRef = new GameSceneHelper(view);
-		mOverRef = new OverSceneHelper(view);
+		mMenuRef = new BaseSceneHelper(view);
+		mPlayRef = new BaseSceneHelper(view);
+		mOverRef = new BaseSceneHelper(view);
 		mHelpRef = new BaseSceneHelper(view);
 	}
 	
@@ -55,8 +55,7 @@ public class AccessibilityHelper {
 	}
 	
 	private static int getScreenY(int y){
-//		int ret = y * sHeight / sGameHeight;
-//		ret = sHeight - ret; // 坐标转换
+		// 针对不同的拉伸方式要有不同的转换，这里是kResolutionShowAll
 		int realHeight = sGameHeight * sWidth / sGameWith;
 		int blackHeight = (sHeight - realHeight) / 2;
 		int y1 = sGameHeight - y;

@@ -41,6 +41,7 @@ public class MasterMind extends Cocos2dxActivity{
 		getWindow().getDecorView().getWindowVisibleDisplayFrame(rectangle);
 		AccessibilityHelper.setScreen(rectangle.width(), rectangle.height());
 		
+		@SuppressWarnings("deprecation")
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
         		getWindowManager().getDefaultDisplay().getWidth(),
         		getWindowManager().getDefaultDisplay().getHeight());
