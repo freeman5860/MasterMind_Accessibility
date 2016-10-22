@@ -7,7 +7,7 @@
 
 #include "HowToPlay.h"
 #include "HelloWorldScene.h"
-#include "ChartboostX.h"
+//#include "ChartboostX.h"
 #include "GameConstants.h"
 #include "AccessibilityWrapper/AccessibilityWrapper.h"
 
@@ -51,10 +51,10 @@ bool HowToPlay::init() {
 
 	this->setKeypadEnabled(true);
     
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-    ChartboostX::sharedChartboostX()->hasCachedInterstitial();
-    ChartboostX::sharedChartboostX()->showInterstitial();
-#endif
+//#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+//    ChartboostX::sharedChartboostX()->hasCachedInterstitial();
+//    ChartboostX::sharedChartboostX()->showInterstitial();
+//#endif
 
 	return true;
 }

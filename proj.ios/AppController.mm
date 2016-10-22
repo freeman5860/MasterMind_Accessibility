@@ -3,6 +3,8 @@
 #import "cocos2d.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"
+#import "AccessibilityView.h"
+#import "AccessibilityHelper.h"
 
 @implementation AppController
 
@@ -27,12 +29,21 @@ static AppDelegate s_sharedApplication;
                                       sharegroup: nil
                                    multiSampling: NO
                                  numberOfSamples: 0];
+    
+    __glView.isAccessibilityElement = false;
+    __glView.accessibilityElementsHidden = false;
+    
 
     // Use RootViewController manage EAGLView 
     viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
     viewController.wantsFullScreenLayout = YES;
     viewController.view = __glView;
-
+    
+    AccessibilityView * acView;
+    acView = [[AccessibilityView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    [[AccessibilityHelper getInstance]setGameView:acView];
+    [viewController.view addSubview:acView];
+    
     // Set RootViewController to window
     if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
     {
@@ -51,10 +62,10 @@ static AppDelegate s_sharedApplication;
     
     cocos2d::CCApplication::sharedApplication()->run();
     
-    interstitial_ = [[GADInterstitial alloc] init];
-    interstitial_.delegate = self;
-    interstitial_.adUnitID = @"a152628d705cc9e";
-    [interstitial_ loadRequest:[GADRequest request]];
+//    interstitial_ = [[GADInterstitial alloc] init];
+//    interstitial_.delegate = self;
+//    interstitial_.adUnitID = @"a152628d705cc9e";
+//    [interstitial_ loadRequest:[GADRequest request]];
     
     return YES;
 }
@@ -113,13 +124,13 @@ static AppDelegate s_sharedApplication;
     [super dealloc];
 }
 
-- (void) interstitial:(GADInterstitial *)ad didFailToReceiveAdWithError:(GADRequestError *)error{
-    NSLog([error localizedDescription]);
-}
-
-- (void) interstitialDidReceiveAd:(GADInterstitial *)ad{
-    [interstitial_ presentFromRootViewController: viewController];
-}
+//- (void) interstitial:(GADInterstitial *)ad didFailToReceiveAdWithError:(GADRequestError *)error{
+//    NSLog([error localizedDescription]);
+//}
+//
+//- (void) interstitialDidReceiveAd:(GADInterstitial *)ad{
+//    [interstitial_ presentFromRootViewController: viewController];
+//}
 
 
 @end
