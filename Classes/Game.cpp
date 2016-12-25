@@ -9,7 +9,7 @@
 #include <string>
 #include <sstream>
 #include "HelloWorldScene.h"
-#include "ChartboostX.h"
+//#include "ChartboostX.h"
 #include "GameConstants.h"
 #include "AccessibilityWrapper/AccessibilityWrapper.h"
 
@@ -389,10 +389,10 @@ void Game::gameOver(bool win) {
 	const char * strAgain = GameConstants::getPlayNodeDesc(7);
 	AccessibilityWrapper::getInstance()->addSceneRect(1, strAgain, bRect.getMinX(),bRect.getMaxX(),bRect.getMinY(),bRect.getMaxY());
     
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-    ChartboostX::sharedChartboostX()->hasCachedInterstitial();
-    ChartboostX::sharedChartboostX()->showInterstitial();
-#endif
+//#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+//    ChartboostX::sharedChartboostX()->hasCachedInterstitial();
+//    ChartboostX::sharedChartboostX()->showInterstitial();
+//#endif
 }
 
 void Game::onAnimFinish(){
