@@ -170,6 +170,6 @@ public class AccessibilityHelper {
 	public static void updateAccessibilityItem(int i, String desc){
 		if(mCurRef != null){
 			mCurRef.updateAccessibilityItem(i, desc);
-	}
+		}
 	}
 }
