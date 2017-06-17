@@ -7,6 +7,7 @@
 #include "SimpleAudioEngine.h"
 //#include "ChartboostX.h"
 #include "AccessibilityWrapper/AccessibilityWrapper.h"
+#include "Language.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "GameHelper.h"
@@ -65,7 +66,8 @@ bool HelloWorld::init() {
 		// #else
         CCLabelTTF* label;
         
-        label = textAddOutline(menuNames[i].c_str(),
+        const char * name = Language::getStringByKey(menuKey[i].c_str());
+        label = textAddOutline(name,
                                        "fonts/akaDylan Plain.ttf", 30, ccWHITE, 1);
 		
 		// #endif
@@ -77,8 +79,7 @@ bool HelloWorld::init() {
 				ccp( VisibleRect::center().x, (VisibleRect::bottom().y + (menuCount - i) * LINE_SPACE) ));
 
 		CCRect rect = pMenuItem->rect();
-		const char * str = GameConstants::getMenuNodeDesc(i);
-		AccessibilityWrapper::getInstance()->addMenuSceneRect(i, str, rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());
+		AccessibilityWrapper::getInstance()->addMenuSceneRect(i, name, rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());
 	}
 
 	m_pItemMenu->setContentSize(

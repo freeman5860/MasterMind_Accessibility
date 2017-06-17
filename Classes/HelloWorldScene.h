@@ -31,4 +31,5 @@ private :
 
 static const int menuCount = 2;
 static const std::string menuNames[]={"开始游戏", "怎么玩","MORE GAME"};
+static const std::string menuKey[]={"play_btn", "htp_btn"};
 #endif // __HELLOWORLD_SCENE_H__

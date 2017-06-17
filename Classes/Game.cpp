@@ -12,11 +12,12 @@
 //#include "ChartboostX.h"
 #include "GameConstants.h"
 #include "AccessibilityWrapper/AccessibilityWrapper.h"
+#include "Language.h"
 
 using namespace std;
 
-static ccColor3B colors[6] = { ccc3(255, 0, 0), ccc3(0, 255, 0), ccc3(0, 0,
-		255), ccc3(255, 255, 0), ccc3(255, 255, 255), ccc3(44, 44, 44) };
+static ccColor3B colors[6] = { ccc3(2, 145, 244), ccc3(47, 197, 35), ccc3(254, 111, 22),
+    ccc3(153, 87, 244), ccc3(244, 47, 46), ccc3(249, 210, 34) };
 //static int wormTag = 1;
 
 Game::Game() :
@@ -72,7 +73,7 @@ bool Game::init() {
 	this->addChild(pMenu, 1);
 
 	CCRect rect = pCloseItem->rect();
-	const char * strClose = GameConstants::getPlayNodeDesc(0);
+    const char * strClose = LocalizedCStringByKey("play_node_0");
 	AccessibilityWrapper::getInstance()->addPlaySceneRect(0, strClose, rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());
 
 	int space_x = origin.x + 33;
@@ -142,7 +143,7 @@ bool Game::init() {
 								p.x - wRect.origin.x,
 								 p.y + 30,
 								 wRect.size.width, wRect.size.height);
-		const char * desc = GameConstants::getPlayNodeDesc(i + 1);
+		const char * desc = LocalizedCStringByKey(GameConstants::getPlayNodeDesc(i + 1));
 		AccessibilityWrapper::getInstance()->addPlaySceneRect(i + 1, desc, rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());
 	}
 
@@ -217,7 +218,7 @@ CCSprite* Game::createWorm(int i) {
 	CCActionInterval* seq = CCSequence::create(animate, CCFlipX::create(true),
 			animate->copy()->autorelease(), CCFlipX::create(false),
 			NULL);
-	worm->setColor(colors[i]);
+	//worm->setColor(colors[i]);
 	worm->runAction(CCRepeatForever::create(seq));
 	return worm;
 }
@@ -306,11 +307,14 @@ bool Game::checkRow() {
 	}
 
 	int round = curCount / 4;
-	char strRes[100] = {0};
-	sprintf(strRes, ROW_RESULT, round, GameConstants::getColor(curRow[0]), 
-		GameConstants::getColor(curRow[1]), 
-		GameConstants::getColor(curRow[2]), 
-		GameConstants::getColor(curRow[3]), cnt1, cnt2);
+	char strRes[200] = {0};
+    const char * row_result = LocalizedCStringByKey("row_result");
+    const char * color1 = LocalizedCStringByKey(GameConstants::getColor(curRow[0]));
+    const char * color2 = LocalizedCStringByKey(GameConstants::getColor(curRow[1]));
+    const char * color3 = LocalizedCStringByKey(GameConstants::getColor(curRow[2]));
+    const char * color4 = LocalizedCStringByKey(GameConstants::getColor(curRow[3]));
+	sprintf(strRes, row_result, round, color1, color2, color3,
+		color4, cnt1, cnt2);
 	AccessibilityWrapper::getInstance()->annouceResult(strRes);
 
 	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
@@ -318,7 +322,6 @@ bool Game::checkRow() {
 	CCPoint p = nest->getPosition();
 	CCRect rect = CCRectMake(20, wRect.getMinY(), visibleSize.width - 40, wRect.size.height);
 	AccessibilityWrapper::getInstance()->addPlaySceneRect(round + 6, strRes, rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());
-
 	return false;
 }
 
@@ -334,10 +337,10 @@ void Game::gameOver(bool win) {
 	string overDesc;
 	if (win) {
 		result = "You Win!";
-		overDesc = "恭喜你猜对了";
+		overDesc = LocalizedCStringByKey("win_desc");
 	} else {
 		result = "You Lose!";
-		overDesc = "游戏结束，猜错了";
+		overDesc = LocalizedCStringByKey("lose_desc");
 	}
 	CCLabelTTF* label = CCLabelTTF::create(result.c_str(),
 			"fonts/akaDylan Plain.ttf", 40);
@@ -370,11 +373,16 @@ void Game::gameOver(bool win) {
 	dialog->addChild(menu);
 	addChild(dialog);
 
-	char strRes[100] = {0};
-	sprintf(strRes, GAME_OVER, overDesc.c_str(), GameConstants::getColor(answer[0]), 
-		GameConstants::getColor(answer[1]), 
-		GameConstants::getColor(answer[2]), 
-		GameConstants::getColor(answer[3]), str);
+	char strRes[200] = {0};
+    const char * game_over = LocalizedCStringByKey("game_over");
+    const char * color1 = LocalizedCStringByKey(GameConstants::getColor(answer[0]));
+    const char * color2 = LocalizedCStringByKey(GameConstants::getColor(answer[1]));
+    const char * color3 = LocalizedCStringByKey(GameConstants::getColor(answer[2]));
+    const char * color4 = LocalizedCStringByKey(GameConstants::getColor(answer[3]));
+	sprintf(strRes, game_over, overDesc.c_str(), color1,
+		color2,
+		color3,
+		color4, str);
 	AccessibilityWrapper::getInstance()->annouceResult(strRes);
 
 	CCRect lRect = dialog->boundingBox();
@@ -386,7 +394,7 @@ void Game::gameOver(bool win) {
 	CCRect againRect = pMenuItem->rect();
 	//CCPoint p = dialog->getPosition();
 	CCRect bRect = CCRectMake(againRect.origin.x, lRect.getMinY() + againRect.origin.y, againRect.size.width, againRect.size.height);
-	const char * strAgain = GameConstants::getPlayNodeDesc(7);
+	const char * strAgain = LocalizedCStringByKey(GameConstants::getPlayNodeDesc(7));
 	AccessibilityWrapper::getInstance()->addSceneRect(1, strAgain, bRect.getMinX(),bRect.getMaxX(),bRect.getMinY(),bRect.getMaxY());
     
 //#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>play_btn</key>
+	<string>开始游戏</string>
+	<key>htp_btn</key>
+	<string>怎么玩</string>
+	<key>htp_sprite</key>
+	<string>htp_zh.png</string>
+	<key>htp_desc</key>
+	<string>怎么玩说明：每轮选择4个颜色的地鼠，猜猜它们的位置以及颜色是否正确，共有9次机会。此界面双击可返回</string>
+	<key>play_node_0</key>
+	<string>关闭按键</string>
+	<key>play_node_1</key>
+	<string>蓝色</string>
+	<key>play_node_2</key>
+	<string>绿色</string>
+	<key>play_node_3</key>
+	<string>橙色</string>
+	<key>play_node_4</key>
+	<string>紫色</string>
+	<key>play_node_5</key>
+	<string>红色</string>
+	<key>play_node_6</key>
+	<string>黄色</string>
+	<key>play_node_7</key>
+	<string>再玩一次</string>
+	<key>row_result</key>
+	<string>第%d轮，%s %s %s %s，%d个猜中位置和颜色, %d个猜中颜色但位置不对</string>
+	<key>game_over</key>
+	<string>%s，正确答案是%s %s %s %s, 花费时间%s</string>
+	<key>default_node</key>
+	<string>未知标签</string>
+	<key>lose_desc</key>
+	<string>游戏结束，猜错了</string>
+	<key>win_desc</key>
+	<string>恭喜你猜对了</string>
+</dict>
+</plist>

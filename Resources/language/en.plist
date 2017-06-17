@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>play_btn</key>
+	<string>Start Game</string>
+	<key>htp_btn</key>
+	<string>How To Play</string>
+	<key>htp_sprite</key>
+	<string>htp_en.png</string>
+	<key>htp_desc</key>
+	<string>How to play: Crack the code in the fewest tries possible. Choose a combination using 6 colors. There could be also the same color in the sequence. Double click to return.</string>
+	<key>play_node_0</key>
+	<string>close button</string>
+	<key>play_node_1</key>
+	<string>blue</string>
+	<key>play_node_2</key>
+	<string>green</string>
+	<key>play_node_3</key>
+	<string>orange</string>
+	<key>play_node_4</key>
+	<string>purple</string>
+	<key>play_node_5</key>
+	<string>red</string>
+	<key>play_node_6</key>
+	<string>yellow</string>
+	<key>play_node_7</key>
+	<string>play again</string>
+	<key>row_result</key>
+	<string>round %d，%s %s %s %s，%d right color and right space, %d right color but wrong space</string>
+	<key>game_over</key>
+	<string>%s，the correct order is %s %s %s %s, it cost time %s</string>
+	<key>default_node</key>
+	<string>Unknow</string>
+    <key>lose_desc</key>
+    <string>Game Over. You Lose.</string>
+    <key>win_desc</key>
+    <string>Congras. You Win.</string>
+</dict>
+</plist>

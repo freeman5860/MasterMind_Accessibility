@@ -10,6 +10,7 @@
 //#include "ChartboostX.h"
 #include "GameConstants.h"
 #include "AccessibilityWrapper/AccessibilityWrapper.h"
+#include "Language.h"
 
 CCScene* HowToPlay::scene() {
 	// 'scene' is an autorelease object
@@ -35,8 +36,9 @@ bool HowToPlay::init() {
 
 	AccessibilityWrapper::getInstance()->onSceneStart(3);
 
+    const char * spName = LocalizedCStringByKey("htp_sprite");
 	// add "HelloWorld" splash screen"
-	CCSprite* pSprite = CCSprite::create("back2.png");
+	CCSprite* pSprite = CCSprite::create(spName);
 
 	// position the sprite on the center of the screen
 	pSprite->setPosition(
@@ -47,7 +49,8 @@ bool HowToPlay::init() {
 	this->setTouchEnabled(true);
 
 	CCRect rect = pSprite->boundingBox();
-	AccessibilityWrapper::getInstance()->addSceneRect(0, HOW_TO_PLAY, rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());
+    const char * htp_desc = LocalizedCStringByKey("htp_desc");
+	AccessibilityWrapper::getInstance()->addSceneRect(0, htp_desc, rect.getMinX(),rect.getMaxX(),rect.getMinY(),rect.getMaxY());
 
 	this->setKeypadEnabled(true);
     
